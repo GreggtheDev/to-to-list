@@ -65,6 +65,16 @@
                     updateLocalStorage(); // Update localStorage after removing
                 }, 1000);
             });
+
+             // Append the new li element to the todo list
+            todoList.appendChild(newTodoItem);
+
+            // Clear the input field
+            todoInput.value = '';
+
+            // Update localStorage with current list of to-dos
+            updateLocalStorage();
+        }
     
 </body>
 </html>
