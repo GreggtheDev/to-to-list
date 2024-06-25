@@ -89,6 +89,50 @@
                 // Push the text content of each li element to the todos array
                 todos.push(todoList.children[i].textContent);
             }
+
+            // Store the todos array in localStorage as a JSON string
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        // Function to load saved to-do items from localStorage
+        function loadTodos() {
+            // Get the todo list ul element
+            let todoList = document.getElementById('todo-list');
+            
+            // Retrieve todos array from localStorage, or initialize an empty array
+            let todos = JSON.parse(localStorage.getItem('todos')) || [];
+            
+            // Iterate over each todo in the todos array
+            todos.forEach(function(todoText) {
+                // Create a new li element for each todo
+                let newTodoItem = document.createElement('li');
+                newTodoItem.textContent = todoText;
+                
+                // Add a click event listener to mark item as done and remove it
+                newTodoItem.addEventListener('click', function() {
+                    // Add 'done' class for strikethrough effect
+                    newTodoItem.classList.add('done');
+                    
+                    // Set timeout to remove item after 1 second
+                    setTimeout(function() {
+                        todoList.removeChild(newTodoItem);
+                        updateLocalStorage(); // Update localStorage after removing
+                    }, 1000);
+                });
+
+                // Append the new li element to the todo list
+                todoList.appendChild(newTodoItem);
+            });
+        }
+
+        // Event listener for adding a new to-do item when form is submitted
+        document.getElementById('todo-form').addEventListener('submit', addTodoItem);
+
+        // Load saved to-do items from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTodos();
+        });
+    </script>
     
 </body>
 </html>
