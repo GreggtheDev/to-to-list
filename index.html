@@ -36,6 +36,35 @@
         function addTodoItem(event) {
             // Prevent the default form submission behavior
             event.preventDefault();
+
+            // Get the input element and trim the value
+            let todoInput = document.getElementById('todo-input');
+            let todoText = todoInput.value.trim();
+
+            // Check if the input is empty
+            if (todoText === '') {
+                alert('Please enter a to-do item.');
+                return;
+            }
+
+            // Get the todo list ul element
+            let todoList = document.getElementById('todo-list');
+            
+            // Create a new li element for the to-do item
+            let newTodoItem = document.createElement('li');
+            newTodoItem.textContent = todoText;
+
+            // Add a click event listener to mark item as done and remove it
+            newTodoItem.addEventListener('click', function() {
+                // Add 'done' class for strikethrough effect
+                newTodoItem.classList.add('done');
+                
+                // Set timeout to remove item after 1 second
+                setTimeout(function() {
+                    todoList.removeChild(newTodoItem);
+                    updateLocalStorage(); // Update localStorage after removing
+                }, 1000);
+            });
     
 </body>
 </html>
